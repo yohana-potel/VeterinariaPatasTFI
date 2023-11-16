@@ -49,9 +49,8 @@ def run(veterinaria):
                 print("Cliente Agregado con su mascota")
 
         elif opcion == 2:
-
             dni_cliente = input("Ingrese el DNI del cliente a dar de baja: ")
-            if veterinaria.contiene_cliente != None:
+            if veterinaria.contiene_cliente(dni_cliente):
                 veterinaria.baja_cliente(dni_cliente)
                 print("Cliente eliminado con éxito")
             else:
@@ -61,75 +60,67 @@ def run(veterinaria):
             dni = input("Ingrese el DNI del cliente a modificar: ")
             telefono = input("Nuevo teléfono: ")
             direccion = input("Nueva dirección: ")
-            if veterinaria.contiene_cliente != None:
-                veterinaria.modificar_cliente(dni,telefono, direccion)
+            if veterinaria.contiene_cliente(dni):
+                veterinaria.modificar_cliente(dni, telefono, direccion)
                 print("Cliente modificado con éxito")
             else:
                 print("No se encontró al cliente con el DNI especificado")
 
         elif opcion == 4:
-           
             dni_cliente = input("DNI del cliente: ")
             cliente = veterinaria.buscar_cliente(dni_cliente)
 
-            if cliente != None:
+            if cliente is not None:
                 nombre_mascota = input("Nombre de la mascota a dar de baja: ")
                 mascota_a_eliminar = None
-                i=0
-                for mascota in cliente.mascota:
+
+                for mascota in cliente.mascotas:
                     if mascota.nombre_mascota == nombre_mascota:
                         mascota_a_eliminar = mascota
-                        i+=1
                         break
 
-                if veterinaria.baja != None:
-                    cliente.mascota.remove(i)
-                    veterinaria.baja_mascota(mascota_a_eliminar)
+                if mascota_a_eliminar is not None:
+                    cliente.mascotas.remove(mascota_a_eliminar)
+                    veterinaria.baja_mascota(dni_cliente)
                     print("Mascota dada de baja con éxito.")
                 else:
                     print("Mascota no encontrada.")
             else:
                 print("Cliente no encontrado")
-        
+
         elif opcion == 5:
             dni = input("Ingrese DNI del cliente: ")
-            fecha = input("Ingrese una fecha par su turno: ")
-            hora = input("Ingrese una hora par su turno: ")
+            fecha = input("Ingrese una fecha para su turno: ")
+            hora = input("Ingrese una hora para su turno: ")
             motivo_consulta = input("Ingrese motivo de Turno: ")
 
             nuevo_turno = Turno(dni, fecha, hora, motivo_consulta)
-            
 
-            if veterinaria.tiene_turno (nuevo_turno.dni):
-                print("El cliente ya tien turno")
+            if veterinaria.tiene_turno(nuevo_turno.dni):
+                print("El cliente ya tiene turno")
             else:
                 veterinaria.nuevo_turno(nuevo_turno)
-                print("Se genero su turno,correctamente")
+                print("Se generó su turno correctamente")
 
         elif opcion == 6:
-            dni = input("Ingrese DNI del cliente para  modificar su turno: ")
-            fecha = input("NFecha a modificar: ")
+            dni = input("Ingrese DNI del cliente para modificar su turno: ")
+            fecha = input("Fecha a modificar: ")
             hora = input("Hora de su turno: ")
-            if veterinaria.modificar_turno(dni,fecha,hora):
 
-                print("Turno modificado con éxito")
+            if veterinaria.modificar_turno(dni, fecha, hora):
+                print("El turno se modificó correctamente")
             else:
                 print("No se encontró turno para el DNI especificado")
 
-        
-            
-
-        elif opcion == 7: #guardar archivo
+        elif opcion == 7:  # guardar archivo
             veterinaria.guardar_archivo()
             print("Datos guardados en el archivo")
 
-
-        elif opcion == 8: #guardar archivo
+        elif opcion == 8:  # leer archivo
             veterinaria.leer_archivo()
             print("Datos leídos desde el archivo")
 
 
-
 if __name__ == "__main__":
     veterinaria = Veterinaria()
-    run(veterinaria)                
+    run(veterinaria)
