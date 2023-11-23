@@ -93,7 +93,6 @@ def run(veterinaria):
             fecha = input("Ingrese una fecha para su turno: ")
             hora = input("Ingrese una hora para su turno: ")
             motivo_consulta = input("Ingrese motivo de Turno: ")
-
             nuevo_turno = Turno(dni, fecha, hora, motivo_consulta)
 
             if veterinaria.tiene_turno(nuevo_turno.dni):
@@ -101,6 +100,7 @@ def run(veterinaria):
             else:
                 veterinaria.nuevo_turno(nuevo_turno)
                 print("Se generó su turno correctamente")
+
 
         elif opcion == 6:
             dni = input("Ingrese DNI del cliente para modificar su turno: ")
@@ -111,6 +111,7 @@ def run(veterinaria):
                 print("El turno se modificó correctamente")
             else:
                 print("No se encontró turno para el DNI especificado")
+
 
         elif opcion == 7:  # guardar archivo
             veterinaria.guardar_archivo()

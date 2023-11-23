@@ -155,14 +155,6 @@ class Turno():
         self.motivo_consulta = motivo_consulta
 
 
-class Doctora():
-    def __init__(self,nombre_dra,apellido, dni, matricula):
-        self.nombre_dra = nombre_dra
-        self.apellido = apellido
-        self.dni = dni
-        self.matricula = matricula
-
-
 class Veterinaria():
     def __init__(self):
         self.clientes = ArbolBinarioBusqueda()
@@ -200,9 +192,9 @@ class Veterinaria():
     def alta_mascota(self,mascota):
         self.mascotas.append(mascota)
 
-    def baja_mascota(self,dni_cliente):
-        mascota = self.buscar_mascota(dni_cliente)
-        self.mascotas.remove(mascota)
+    def baja_mascota(self,mascota):
+        if mascota in self.animales:
+            del self.clientes[mascota]
 
     def modificar_mascota(self,dni_cliente,nva_descripcion):
         cliente = self.buscar_cliente(dni_cliente)
@@ -226,7 +218,7 @@ class Veterinaria():
 
 #metodos  turnos
     def nuevo_turno(self, turno):
-        self.turnos.insertar(turno.dni, turno)
+        self.turnos.append(turno.dni, turno)
     
     def tiene_turno(self, dni) -> bool:
         return dni in self.turnos
@@ -249,7 +241,6 @@ class Veterinaria():
                 return True  #turno modificado!
         
         return False  # No se encontró un turno para el DNI especificado
-
 
 #guradar
     def guardar_archivo(self,archivo="veterinaria.pickle"):
